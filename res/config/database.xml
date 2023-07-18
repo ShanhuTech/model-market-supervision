@@ -1,0 +1,51 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE xml>
+<database>
+    <!-- 类型 -->
+    <type>mysql</type>
+    <!-- 驱动 -->
+    <driver>com.mysql.cj.jdbc.Driver</driver>
+    <!-- ip -->
+    <ip>127.0.0.1</ip>
+    <!-- <ip>192.168.10.150</ip> -->
+    <!-- 端口 -->
+    <port>3306</port>
+    <!-- 数据库名称 -->
+    <database_name>model-market-supervision</database_name>
+    <!-- 用户名 -->
+    <user_name>root</user_name>
+    <!-- 密码 -->
+    <user_password>5695234</user_password>
+    <!-- 字符编码 -->
+    <character_encoding>utf-8</character_encoding>
+    <!-- 是否使用ssl连接 -->
+    <use_ssl>false</use_ssl>
+    <!-- 是否允许公开密钥检索 -->
+    <allow_public_key_retrieval>true</allow_public_key_retrieval>
+    <!-- 服务时区  -->
+    <server_timezone>UTC</server_timezone>
+    <!-- 以下为数据源配置 -->
+    <!-- 连接池初始化大小  -->
+    <initial_size>64</initial_size>
+    <!-- 连接池最小大小 -->
+    <min_idle>64</min_idle>
+    <!-- 连接池最大等待时间（单位：毫秒） -->
+    <max_active>10000</max_active>
+    <!-- 当应用向连接池申请连接时，连接池会判断这条连接是否是可用。 -->
+    <test_on_borrow>false</test_on_borrow>
+    <!-- 当应用向连接池申请连接时，并且test_on_borrow为false时，连接池将会判断连接是否处于空闲状态，如果是，则验证这条连接是否可用。 -->
+    <test_while_idle>true</test_while_idle>
+    <!-- 检测关闭空闲连接的时间（单位：毫秒） -->
+    <time_between_eviction_runs_millis>60000</time_between_eviction_runs_millis>
+    <!-- 连接在池中最小生存的时间（单位：毫秒） -->
+    <min_evictable_idle_time_millis>30000</min_evictable_idle_time_millis>
+    <!-- 连接在池中最大生存的时间（单位：毫秒） -->
+    <max_evictable_idle_time_millis>180000</max_evictable_idle_time_millis>
+    <!-- 连接最大存活时间，默认是-1（不限制物理连接时间），从创建连接开始计算，如果超过该时间，则会被清理（单位：毫秒）。 -->
+    <phy_timeout_millis>15000</phy_timeout_millis>
+    <validation_query>select 1</validation_query>
+    <pool_prepared_statements>true</pool_prepared_statements>
+    <max_open_prepared_statements>20</max_open_prepared_statements>
+    <use_global_datasource_stat>true</use_global_datasource_stat>
+    <keep_alive>true</keep_alive>
+</database>

@@ -1,0 +1,29 @@
+/******************************************************************************/
+/* 提示样式 */
+/******************************************************************************/
+.global_prompt {
+  display: none;
+  width: auto;
+  height: auto;
+  top: 0rem;
+  left: 0rem;
+  position: absolute; 
+  user-select: none;
+  border-radius: 0.4rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.global_prompt tbody tr td {
+  font-size: 1.4rem;
+  text-align: center;
+}
+
+.global_prompt_success {
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+
+.global_prompt_error {
+  color: #d9534f;
+  background-color: #ffd6d6;
+}

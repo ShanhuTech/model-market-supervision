@@ -1,0 +1,47 @@
+/******************************************************************************/
+/* 删除确认窗样式 */
+/******************************************************************************/
+.global_confirm_window {
+}
+
+.global_confirm_window .gcw_container {
+  width: 100%;
+  height: auto;
+  text-align: center;
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.global_confirm_window .gcw_result_info_label {
+  display: none;
+  font-size: 1.4rem;
+  margin: 1.5rem;
+  border-radius: 0.4rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.global_confirm_window .gcw_result_info_label_success {
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+
+.global_confirm_window .gcw_result_info_label_error {
+  color: #d9534f;
+  background-color: #ffd6d6;
+}
+
+.global_confirm_window .gcw_content_label {
+  display: block;
+  color: #333333;
+  font-size: 1.4rem;
+  margin: 1.5rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.global_confirm_window .gcw_confirm_button {
+  width: 9rem;
+  margin-right: 1.5rem;
+}
+
+.global_confirm_window .gcw_cancel_button {
+  width: 9rem;
+}

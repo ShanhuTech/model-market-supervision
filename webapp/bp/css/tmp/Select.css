@@ -1,0 +1,48 @@
+/******************************************************************************/
+/* 列表样式 */
+/******************************************************************************/
+.global_select {
+  height: 3rem;
+  color: #333333;
+  /* 列表的居中不能用text-align */
+  text-align-last: center;
+  font-size: 1.4rem;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: #2f3c48;
+  border-radius: 0.4rem;
+  /* 边距1rem + 箭头图片宽度1.2rem + 箭头图片右边距1rem = 3.2rem */
+  padding: 0rem 3.2rem 0rem 1rem;
+  background-color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+  -moz-appearance: none;
+  -webkit-appearance: none;
+  background-size: 1.2rem auto;
+  background-repeat: no-repeat;
+  background-position: right 1rem center;
+  background-image: url(../img/select_arrow_2f3c48.png);
+}
+
+.global_select:hover {
+  color: #ff8556;
+}
+
+.global_select:focus {
+  color: #2f3c48;
+}
+
+.global_select:active {
+  color: #2f3c48;
+}
+
+.global_select:disabled {
+  color: #e4e4e4;
+  border-color: #a1a1a1;
+  background-image: url(../img/select_lock_a1a1a1.png);
+  cursor: not-allowed;
+}
+
+.global_select option {
+  font-size: inherit;
+}

@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset = "utf-8" />
+<link rel = "shortcut icon" href = "../../img/favicon.ico" type = "image/x-icon" />
+<!-- *********************************************************************** -->
+<!-- plugin css -->
+<!-- *********************************************************************** -->
+<link rel = "stylesheet" type = "text/css" href = "../../plugin/datetimepicker/2.5.20/datetimepicker.full.min.css"/>
+<!-- *********************************************************************** -->
+<!-- custom css -->
+<!-- *********************************************************************** -->
+<link rel = "stylesheet" type = "text/css" href = "../../css/Global.css"/>
+<link rel = "stylesheet" type = "text/css" href = "../../css/Button.css"/>
+<link rel = "stylesheet" type = "text/css" href = "../../css/ConfirmWindow.css"/>
+<link rel = "stylesheet" type = "text/css" href = "../../css/FormList.css"/>
+<link rel = "stylesheet" type = "text/css" href = "../../css/Input.css"/>
+<link rel = "stylesheet" type = "text/css" href = "../../css/Label.css"/>
+<link rel = "stylesheet" type = "text/css" href = "../../css/PopupWindow.css"/>
+<link rel = "stylesheet" type = "text/css" href = "../../css/Scroll.css"/>
+<link rel = "stylesheet" type = "text/css" href = "../../css/Table.css"/>
+<link rel = "stylesheet" type = "text/css" href = "../../css/WaitMask.css"/>
+<link rel = "stylesheet" type = "text/css" href = "./css/GlobalHolidayManagement.css"/>
+<!-- *********************************************************************** -->
+<!-- plugin js -->
+<!-- *********************************************************************** -->
+<script src = "../../plugin/jquery/1.12.4/jquery.min.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../plugin/datetimepicker/2.5.20/datetimepicker.full.min.js" type = "text/javascript" charset = "utf-8"></script>
+<!-- *********************************************************************** -->
+<!-- custom js -->
+<!-- *********************************************************************** -->
+<script src = "../../js/Toolkit.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/Configure.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/ObjectFactory.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/ConfirmWindow.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/FormList.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/JSControl.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/Module.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/Network.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/PopupWindow.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/Queue.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../../js/WaitMask.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../home/js/Error.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "../login/js/AccountSecurity.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "./js/global_holiday_management/GlobalHolidayAM.js" type = "text/javascript" charset = "utf-8"></script>
+<script src = "./js/global_holiday_management/GlobalHolidayManagement.js" type = "text/javascript" charset = "utf-8"></script>
+<script>
+////////////////////////////////////////////////////////////////////////////////
+// ECMAScript规范。
+////////////////////////////////////////////////////////////////////////////////
+"use strict";
+////////////////////////////////////////////////////////////////////////////////
+// 准备完毕。
+////////////////////////////////////////////////////////////////////////////////
+$(window).off("pageshow").on("pageshow", function(event) {
+  //////////////////////////////////////////////////////////////////////////////
+  // 设置页面的字体大小。
+  //////////////////////////////////////////////////////////////////////////////
+  Toolkit.setHtmlFontSize(10, parseInt($("html").css("width")));
+  //////////////////////////////////////////////////////////////////////////////
+  // 规则数组。
+  //////////////////////////////////////////////////////////////////////////////
+  const ruleArray = new Array();
+  //////////////////////////////////////////////////////////////////////////////
+  // 获取模块规则。
+  //////////////////////////////////////////////////////////////////////////////
+  Module.getModuleRulePromise(this, "supervision.spot.GlobalHoliday", ruleArray).then(function() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 创建对象。
+    ////////////////////////////////////////////////////////////////////////////
+    const globalHolidayManagement = new GlobalHolidayManagement(ruleArray);
+    ////////////////////////////////////////////////////////////////////////////
+    // 生成代码。
+    ////////////////////////////////////////////////////////////////////////////
+    globalHolidayManagement.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 初始化视图。
+    ////////////////////////////////////////////////////////////////////////////
+    globalHolidayManagement.initView();
+    ////////////////////////////////////////////////////////////////////////////
+    // 初始化事件。
+    ////////////////////////////////////////////////////////////////////////////
+    globalHolidayManagement.initEvent();
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取全局假期。
+    ////////////////////////////////////////////////////////////////////////////
+    globalHolidayManagement.getGlobalHoliday();
+  });
+});
+</script>
+<title></title>
+</head>
+<body>
+</body>
+</html>

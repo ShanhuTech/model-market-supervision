@@ -1,0 +1,29 @@
+.global_scroll {
+  overflow-y: scroll;
+}
+
+/* WebKit */
+.global_scroll::-webkit-scrollbar {
+  /* 滚动条宽度 */
+  width: 0.4rem;
+}
+
+.global_scroll_dark::-webkit-scrollbar-track {
+  /* 背景色 */
+  background-color: #4f667a;
+}
+
+.global_scroll_dark::-webkit-scrollbar-thumb {
+  /* 滚动条颜色 */
+  background-color: #5ca4d7;
+}
+
+.global_scroll_light::-webkit-scrollbar-track {
+  /* 背景色 */
+  background-color: rgba(255, 255, 255, 0);
+}
+
+.global_scroll_light::-webkit-scrollbar-thumb {
+  /* 滚动条颜色 */
+  background-color: #ffacac;
+}

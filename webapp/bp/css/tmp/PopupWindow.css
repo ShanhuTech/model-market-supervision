@@ -1,0 +1,55 @@
+/******************************************************************************/
+/* 弹窗样式 */
+/******************************************************************************/
+.global_popup_window {
+  display: none;
+  width: 100%;
+  height: 100%;
+  top: 0rem; /* 这里是必须的，否则默认值会换行，导致界面的尺寸变化 */
+  left: 0rem; /* 这里是必须的，否则默认值会换行，导致界面的尺寸变化 */
+  position: fixed;
+  user-select: none;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
+.global_popup_window .gpw_window {
+  height: 100%;
+  border-style: solid;
+  border-color: #E5E5E5;
+  border-width: 0rem 0rem 0rem 0.1rem;
+  background-color: #ffffff;
+  float: right;
+}
+
+.global_popup_window .gpw_window .gpw_title {
+  width: 100%;
+  height: auto;
+  background-color: #fafafa;
+}
+
+.global_popup_window .gpw_window .gpw_title .gpw_text {
+  display: inline-block;
+  width: calc(100% - 1.2rem/* img宽度 */ - 1.5rem/* 右边距 */);
+  height: auto;
+  color: #333333;
+  font-size: 1.4rem;
+  text-align: left;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.global_popup_window .gpw_window .gpw_title img {
+  width: 1.2rem;
+  height: auto;
+  content: url(../img/popup_window_close_e5e5e5.png);
+}
+
+
+.global_popup_window .gpw_window .gpw_title img:hover {
+  content: url(../img/popup_window_close_d9534f.png);
+  cursor: pointer;
+}
+
+.global_popup_window .gpw_window .gpw_content {
+  width: 100%;
+  overflow: auto;
+}

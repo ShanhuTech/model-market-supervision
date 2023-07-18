@@ -1,0 +1,74 @@
+/******************************************************************************/
+/* 表单列表样式 */
+/******************************************************************************/
+.global_form_list {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.global_form_list tbody .gfl_result_info {
+  display: none;
+}
+
+.global_form_list tbody .gfl_result_info td {
+  padding: 1.5rem 1rem 0rem 1.5rem;
+}
+
+.global_form_list tbody .gfl_result_info td .gfl_result_info_label {
+  display: block;
+  font-size: 1.4rem;
+  text-align: center;
+  word-break: break-all;
+  border-radius: 0.4rem;
+  padding: 1rem 1.5rem 1rem 1.5rem;
+}
+
+.global_form_list tbody .gfl_result_info td .gfl_result_info_label_success {
+  color: #3c763d;
+  background-color: #dff0d8;
+}
+
+.global_form_list tbody .gfl_result_info td .gfl_result_info_label_error {
+  color: #d9534f;
+  background-color: #ffd6d6;
+}
+
+/* 用于标记和重置需要隐藏的行 */
+.global_form_list tbody .gfl_hide_row {
+  display: none;
+}
+
+.global_form_list tbody tr .gfl_label {
+  width: 1px; /* 这里需要设置一个非0的最小单位，否则该列会有多余空间，不能用rem因为这个是相对单位数值较大。 */
+  text-align: right;
+  white-space: nowrap;
+  padding: 1.5rem 1rem 0rem 1.5rem;
+}
+
+.global_form_list tbody tr .gfl_control {
+  padding: 1.5rem 1.5rem 0rem 0rem;
+}
+
+.global_form_list tbody .gfl_prompt_info {
+  display: none;
+}
+
+.global_form_list tbody .gfl_prompt_info td:nth-child(2) {
+  color: #e64340;
+  font-size: 1.4rem;
+  padding-right: 1.5rem;
+}
+
+.global_form_list tbody .gfl_button td {
+  text-align: center;
+  padding: 1.5rem 0rem 1.5rem 0rem;
+}
+
+.global_form_list tbody .gfl_button td .gfl_confirm_button {
+  width: 9rem;
+  margin-right: 1.5rem;
+}
+
+.global_form_list tbody .gfl_button td .gfl_cancel_button {
+  width: 9rem;
+}

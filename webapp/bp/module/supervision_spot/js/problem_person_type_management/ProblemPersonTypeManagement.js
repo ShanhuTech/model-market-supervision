@@ -1,0 +1,712 @@
+"use strict";
+
+class ProblemPersonTypeManagement {
+  /**
+   * 构造函数
+   *
+   * @param ruleArray 规则数组
+   */
+  constructor(ruleArray) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 个人问题规则。
+    ////////////////////////////////////////////////////////////////////////////
+    this.problemPersonTypeRule = ruleArray[0];
+    ////////////////////////////////////////////////////////////////////////////
+    // 个人问题数组。
+    ////////////////////////////////////////////////////////////////////////////
+    this.problemPersonTypeArray = new Array();
+    ////////////////////////////////////////////////////////////////////////////
+    // 待删除数据的uuid。
+    ////////////////////////////////////////////////////////////////////////////
+    this.removeDataUuid = null;
+    ////////////////////////////////////////////////////////////////////////////
+    // 队列。
+    ////////////////////////////////////////////////////////////////////////////
+    this.queue = new Queue();
+  }
+
+  /**
+   * 生成代码
+   */
+  generateCode() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container = new JSControl("div");
+    ////////////////////////////////////////////////////////////////////////////
+    // 工具栏。
+    ////////////////////////////////////////////////////////////////////////////
+    this.toolbar = new JSControl("div");
+    ////////////////////////////////////////////////////////////////////////////
+    // 添加个人问题按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeButton = new JSControl("button");
+    ////////////////////////////////////////////////////////////////////////////
+    // 个人问题表格。
+    ////////////////////////////////////////////////////////////////////////////
+    this.problemPersonTypeTable = new JSControl("table");
+    ////////////////////////////////////////////////////////////////////////////
+    // 等待遮蔽。
+    ////////////////////////////////////////////////////////////////////////////
+    this.waitMask = new WaitMask();
+    ////////////////////////////////////////////////////////////////////////////
+    // 添加个人问题AM。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeAM = new ProblemPersonTypeAM(this, "添加个人问题", 40);
+    ////////////////////////////////////////////////////////////////////////////
+    // 修改个人问题AM。
+    ////////////////////////////////////////////////////////////////////////////
+    this.modifyProblemPersonTypeAM = new ProblemPersonTypeAM(this, "修改个人问题", 40);
+    ////////////////////////////////////////////////////////////////////////////
+    // 删除确认窗。
+    ////////////////////////////////////////////////////////////////////////////
+    this.removeConfirmWindow = new ConfirmWindow("删除确认", 30);
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.setAttribute(
+      {
+        "class": "global_scroll global_scroll_dark container"
+      }
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    // 工具栏。
+    ////////////////////////////////////////////////////////////////////////////
+    this.toolbar.setAttribute(
+      {
+        "class": "tool_bar"
+      }
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    // 添加个人问题按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeButton.setAttribute(
+      {
+        "class": "global_button_primary add_problem_person_type_button"
+      }
+    );
+    this.addProblemPersonTypeButton.setContent("添加个人问题");
+    ////////////////////////////////////////////////////////////////////////////
+    // 个人问题表格。
+    ////////////////////////////////////////////////////////////////////////////
+    this.problemPersonTypeTable.setAttribute(
+      {
+        "class": "global_table problem_person_type_table"
+      }
+    );
+    const tableHead = `
+      <tr>
+        <td class = "name">名称</td>
+        <td class = "score">分值</td>
+        <td class = "operation">操作</td>
+      </tr>
+    `;
+    this.problemPersonTypeTable.setContent(`
+      <thead>${tableHead}</thead>
+      <tbody>
+        <tr>
+          <td class = "rowspan" colspan = "3">尚无数据</td>
+        </tr>
+      </tbody>
+    `);
+    ////////////////////////////////////////////////////////////////////////////
+    // 等待遮蔽。
+    ////////////////////////////////////////////////////////////////////////////
+    this.waitMask.setAttribute(
+      {
+        "class": "global_wait_mask"
+      }
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    // 添加个人问题AM。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeAM.setClassSign("add_problem_person_type_am");
+    ////////////////////////////////////////////////////////////////////////////
+    // 修改个人问题AM。
+    ////////////////////////////////////////////////////////////////////////////
+    this.modifyProblemPersonTypeAM.setClassSign("modify_problem_person_type_am");
+    ////////////////////////////////////////////////////////////////////////////
+    // 删除确认窗。
+    ////////////////////////////////////////////////////////////////////////////
+    this.removeConfirmWindow.setAttribute(
+      {
+        "class": "confirm_window"
+      }
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 工具栏。
+    ////////////////////////////////////////////////////////////////////////////
+    this.toolbar.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 添加个人问题按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeButton.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 个人问题表格。
+    ////////////////////////////////////////////////////////////////////////////
+    this.problemPersonTypeTable.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 等待遮蔽。
+    ////////////////////////////////////////////////////////////////////////////
+    this.waitMask.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 添加个人问题AM。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeAM.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 修改个人问题AM。
+    ////////////////////////////////////////////////////////////////////////////
+    this.modifyProblemPersonTypeAM.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 删除确认窗。
+    ////////////////////////////////////////////////////////////////////////////
+    this.removeConfirmWindow.generateCode();
+  }
+
+  /**
+   * 初始化视图
+   */
+  initView() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 页面添加容器。
+    ////////////////////////////////////////////////////////////////////////////
+    $("body").html(this.container.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加工具栏。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.toolbar.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 工具栏添加添加个人问题按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.toolbar.getObject().append(this.addProblemPersonTypeButton.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加个人问题表格。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.problemPersonTypeTable.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加等待遮蔽。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.waitMask.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加添加个人问题AM。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.addProblemPersonTypeAM.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加修改个人问题AM。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.modifyProblemPersonTypeAM.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加删除确认窗。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.removeConfirmWindow.getCode());
+  }
+
+  /**
+   * 初始化事件
+   */
+  initEvent() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 注册添加个人问题按钮的click事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeButton.getObject().off("click").on("click", null, this, this.addProblemPersonTypeButtonClickEvent);
+    ////////////////////////////////////////////////////////////////////////////
+    // 初始化添加个人问题AM事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeAM.initEvent();
+    ////////////////////////////////////////////////////////////////////////////
+    // 初始化修改个人问题AM事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.modifyProblemPersonTypeAM.initEvent();
+    ////////////////////////////////////////////////////////////////////////////
+    // 初始化删除确认窗事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.removeConfirmWindow.initEvent();
+    ////////////////////////////////////////////////////////////////////////////
+    // 注册添加个人问题AM确认按钮的click事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeAM.formList.confirmButton.getObject().off("click").on("click", null, this, this.addProblemPersonTypeAMConfirmButtonClickEvent);
+    ////////////////////////////////////////////////////////////////////////////
+    // 注册添加个人问题AM取消按钮的click事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.addProblemPersonTypeAM.formList.cancelButton.getObject().off("click").on("click", null, this, this.addProblemPersonTypeAMCancelButtonClickEvent);
+    ////////////////////////////////////////////////////////////////////////////
+    // 注册修改个人问题AM确认按钮的click事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.modifyProblemPersonTypeAM.formList.confirmButton.getObject().off("click").on("click", null, this, this.modifyProblemPersonTypeAMConfirmButtonClickEvent);
+    ////////////////////////////////////////////////////////////////////////////
+    // 注册修改个人问题AM取消按钮的click事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.modifyProblemPersonTypeAM.formList.cancelButton.getObject().off("click").on("click", null, this, this.modifyProblemPersonTypeAMCancelButtonClickEvent);
+    ////////////////////////////////////////////////////////////////////////////
+    // 注册删除确认窗确认按钮的click事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.removeConfirmWindow.confirmButton.getObject().off("click").on("click", null, this, this.removeConfirmWindowConfirmButtonClickEvent);
+  }
+
+  /**
+   * 添加个人问题按钮click事件
+   * @param event 事件对象
+   */
+  addProblemPersonTypeButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    source.addProblemPersonTypeAM.show();
+  }
+
+  /**
+   * 添加个人问题AM确认按钮click事件
+   * @param event 事件对象
+   */
+  addProblemPersonTypeAMConfirmButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    ////////////////////////////////////////////////////////////////////////////
+    // 校验数据之前，先要隐藏之前的提示。
+    ////////////////////////////////////////////////////////////////////////////
+    source.addProblemPersonTypeAM.formList.hideAllPrompt();
+    ////////////////////////////////////////////////////////////////////////////
+    // 参数检查数组。
+    ////////////////////////////////////////////////////////////////////////////
+    const parameterCheckArray = new Array();
+    parameterCheckArray.push({"name": "name", "value": source.addProblemPersonTypeAM.nameTextField.getObject().val(), "id": source.addProblemPersonTypeAM.nameTextField.getId(), "allow_null": false, "custom_error_message": null});
+    parameterCheckArray.push({"name": "score", "value": source.addProblemPersonTypeAM.scoreTextField.getObject().val(), "id": source.addProblemPersonTypeAM.scoreTextField.getId(), "allow_null": false, "custom_error_message": null});
+    parameterCheckArray.push({"name": "order", "value": source.addProblemPersonTypeAM.orderTextField.getObject().val(), "id": source.addProblemPersonTypeAM.orderTextField.getId(), "allow_null": false, "custom_error_message": null});
+    ////////////////////////////////////////////////////////////////////////////
+    // 检查参数。
+    ////////////////////////////////////////////////////////////////////////////
+    for (let i = 0; i < parameterCheckArray.length; i++) {
+      const parameterObj = parameterCheckArray[i];
+      if (!Module.checkParameter(source.problemPersonTypeRule, "addProblemPersonType", parameterObj, source, function error(source, errorMessage) {
+        source.addProblemPersonTypeAM.formList.showPrompt(parameterObj.id, errorMessage);
+      })) {
+        return;
+      }
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    // 参数数组。
+    ////////////////////////////////////////////////////////////////////////////
+    const parameterArray = new Array();
+    parameterArray.push({"Account-Token": AccountSecurity.getItem("account_token")});
+    for (let i = 0; i < parameterCheckArray.length; i++) {
+      const parameter = parameterCheckArray[i];
+      const param = {};
+      param[parameter.name] = parameter.value;
+      parameterArray.push(param);
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    // 添加个人问题。
+    ////////////////////////////////////////////////////////////////////////////
+    Network.request(Network.RequestType.POST, Network.ResponseType.JSON, [{"Content-Type": "application/x-www-form-urlencoded"}],
+      Configure.getServerUrl() + "/module/supervision.spot.ProblemPersonType/addProblemPersonType", parameterArray, source,
+      function loadStart(xhr, xhrEvent, source) {
+        source.addProblemPersonTypeAM.formList.hideResultInfo(); // 隐藏结果信息。
+        source.addProblemPersonTypeAM.frozenControl("addProblemPersonType"); // 冻结控件。
+      },
+      function error(xhr, xhrEvent, source) {
+        source.addProblemPersonTypeAM.formList.showResultInfo("error", "网络请求失败");
+      },
+      function timeout(xhr, xhrEvent, source) {
+        source.addProblemPersonTypeAM.formList.showResultInfo("error", "网络请求超时");
+      },
+      function readyStateChange(xhr, xhrEvent, source) {
+        if ((XMLHttpRequest.DONE == xhr.readyState) && (200 == xhr.status)) {
+          source.addProblemPersonTypeAM.recoverControl("addProblemPersonType"); // 恢复控件。
+          //////////////////////////////////////////////////////////////////////
+          // 响应结果。
+          //////////////////////////////////////////////////////////////////////
+          const responseResult = xhr.response;
+          if (Toolkit.stringEqualsIgnoreCase("SUCCESS", responseResult.status)) {
+            ////////////////////////////////////////////////////////////////////
+            // 显示成功信息。
+            ////////////////////////////////////////////////////////////////////
+            source.addProblemPersonTypeAM.formList.showResultInfo("success", "添加成功");
+            ////////////////////////////////////////////////////////////////////
+            // 重置控件。
+            ////////////////////////////////////////////////////////////////////
+            source.addProblemPersonTypeAM.resetControl();
+            ////////////////////////////////////////////////////////////////////
+            // 获取个人问题。
+            ////////////////////////////////////////////////////////////////////
+            source.getProblemPersonType();
+          } else if (Toolkit.stringEqualsIgnoreCase("ERROR", responseResult.status)) {
+            source.addProblemPersonTypeAM.formList.showResultInfo("error", responseResult.attach);
+          } else {
+            source.addProblemPersonTypeAM.formList.showResultInfo("error", "操作异常");
+          }
+        }
+      }
+    );
+  }
+
+  /**
+   * 添加个人问题AM取消按钮click事件
+   * @param event 事件对象
+   */
+  addProblemPersonTypeAMCancelButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    source.addProblemPersonTypeAM.hide();
+  }
+
+  /**
+   * 修改个人问题AM确认按钮click事件
+   * @param event 事件对象
+   */
+  modifyProblemPersonTypeAMConfirmButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    ////////////////////////////////////////////////////////////////////////////
+    // 校验数据之前，先要隐藏之前的提示。
+    ////////////////////////////////////////////////////////////////////////////
+    source.modifyProblemPersonTypeAM.formList.hideAllPrompt();
+    ////////////////////////////////////////////////////////////////////////////
+    // 参数检查数组。
+    ////////////////////////////////////////////////////////////////////////////
+    const parameterCheckArray = new Array();
+    parameterCheckArray.push({"name": "uuid", "value": source.modifyProblemPersonTypeAM.uuidTextField.getObject().val(), "id": source.modifyProblemPersonTypeAM.uuidTextField.getId(), "allow_null": false, "custom_error_message": null});
+    parameterCheckArray.push({"name": "name", "value": source.modifyProblemPersonTypeAM.nameTextField.getObject().val(), "id": source.modifyProblemPersonTypeAM.nameTextField.getId(), "allow_null": false, "custom_error_message": null});
+    parameterCheckArray.push({"name": "score", "value": source.modifyProblemPersonTypeAM.scoreTextField.getObject().val(), "id": source.modifyProblemPersonTypeAM.scoreTextField.getId(), "allow_null": false, "custom_error_message": null});
+    parameterCheckArray.push({"name": "order", "value": source.modifyProblemPersonTypeAM.orderTextField.getObject().val(), "id": source.modifyProblemPersonTypeAM.orderTextField.getId(), "allow_null": false, "custom_error_message": null});
+    ////////////////////////////////////////////////////////////////////////////
+    // 检查参数。
+    ////////////////////////////////////////////////////////////////////////////
+    for (let i = 0; i < parameterCheckArray.length; i++) {
+      const parameterObj = parameterCheckArray[i];
+      if (!Module.checkParameter(source.problemPersonTypeRule, "modifyProblemPersonType", parameterObj, source, function error(source, errorMessage) {
+        source.modifyProblemPersonTypeAM.formList.showPrompt(parameterObj.id, errorMessage);
+      })) {
+        return;
+      }
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    // 参数数组。
+    ////////////////////////////////////////////////////////////////////////////
+    const parameterArray = new Array();
+    parameterArray.push({"Account-Token": AccountSecurity.getItem("account_token")});
+    for (let i = 0; i < parameterCheckArray.length; i++) {
+      const parameter = parameterCheckArray[i];
+      const param = {};
+      param[parameter.name] = parameter.value;
+      parameterArray.push(param);
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    // 修改个人问题。
+    ////////////////////////////////////////////////////////////////////////////
+    Network.request(Network.RequestType.POST, Network.ResponseType.JSON, [{"Content-Type": "application/x-www-form-urlencoded"}],
+      Configure.getServerUrl() + "/module/supervision.spot.ProblemPersonType/modifyProblemPersonType", parameterArray, source,
+      function loadStart(xhr, xhrEvent, source) {
+        source.modifyProblemPersonTypeAM.formList.hideResultInfo(); // 隐藏结果信息。
+        source.modifyProblemPersonTypeAM.frozenControl("modifyProblemPersonType"); // 冻结控件。
+      },
+      function error(xhr, xhrEvent, source) {
+        source.modifyProblemPersonTypeAM.formList.showResultInfo("error", "网络请求失败");
+      },
+      function timeout(xhr, xhrEvent, source) {
+        source.modifyProblemPersonTypeAM.formList.showResultInfo("error", "网络请求超时");
+      },
+      function readyStateChange(xhr, xhrEvent, source) {
+        if ((XMLHttpRequest.DONE == xhr.readyState) && (200 == xhr.status)) {
+          source.modifyProblemPersonTypeAM.recoverControl("modifyProblemPersonType"); // 恢复控件。
+          //////////////////////////////////////////////////////////////////////
+          // 响应结果。
+          //////////////////////////////////////////////////////////////////////
+          const responseResult = xhr.response;
+          if (Toolkit.stringEqualsIgnoreCase("SUCCESS", responseResult.status)) {
+            ////////////////////////////////////////////////////////////////////
+            // 显示成功信息。
+            ////////////////////////////////////////////////////////////////////
+            source.modifyProblemPersonTypeAM.formList.showResultInfo("success", "修改成功");
+            ////////////////////////////////////////////////////////////////////
+            // 重置控件（修改功能在成功修改之后，不需要重置控件内容，这里不用但
+            // 做保留）。
+            ////////////////////////////////////////////////////////////////////
+            // source.modifyProblemPersonTypeAM.resetControl();
+            ////////////////////////////////////////////////////////////////////
+            // 获取个人问题。
+            ////////////////////////////////////////////////////////////////////
+            source.getProblemPersonType();
+          } else if (Toolkit.stringEqualsIgnoreCase("ERROR", responseResult.status)) {
+            source.modifyProblemPersonTypeAM.formList.showResultInfo("error", responseResult.attach);
+          } else {
+            source.modifyProblemPersonTypeAM.formList.showResultInfo("error", "操作异常");
+          }
+        }
+      }
+    );
+  }
+
+  /**
+   * 修改个人问题AM取消按钮click事件
+   * @param event 事件对象
+   */
+  modifyProblemPersonTypeAMCancelButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    source.modifyProblemPersonTypeAM.hide();
+  }
+
+  /**
+   * 个人问题表格修改按钮click事件
+   * @param event 事件对象
+   */
+  problemPersonTypeTableModifyButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取待修改数据的uuid。
+    ////////////////////////////////////////////////////////////////////////////
+    const uuid = $(this).parent().attr("data-uuid");
+    ////////////////////////////////////////////////////////////////////////////
+    // 从个人问题数组中获取该uuid对应的数据。
+    ////////////////////////////////////////////////////////////////////////////
+    let obj = null;
+    for (let i = 0; i < source.problemPersonTypeArray.length; i++) {
+      if (uuid == source.problemPersonTypeArray[i].uuid) {
+        obj = source.problemPersonTypeArray[i];
+        break;
+      }
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    // 设置当前数据至修改界面。
+    ////////////////////////////////////////////////////////////////////////////
+    if (null != obj) {
+      //////////////////////////////////////////////////////////////////////////
+      // 加载uuid。
+      //////////////////////////////////////////////////////////////////////////
+      source.modifyProblemPersonTypeAM.uuidTextField.getObject().val(obj.uuid);
+      //////////////////////////////////////////////////////////////////////////
+      // 加载名称。
+      //////////////////////////////////////////////////////////////////////////
+      source.modifyProblemPersonTypeAM.nameTextField.getObject().val(obj.name);
+      //////////////////////////////////////////////////////////////////////////
+      // 加载分值。
+      //////////////////////////////////////////////////////////////////////////
+      source.modifyProblemPersonTypeAM.scoreTextField.getObject().val(obj.score);
+      //////////////////////////////////////////////////////////////////////////
+      // 加载排序。
+      //////////////////////////////////////////////////////////////////////////
+      source.modifyProblemPersonTypeAM.orderTextField.getObject().val(obj.order);
+      //////////////////////////////////////////////////////////////////////////
+      // 显示修改个人问题。
+      //////////////////////////////////////////////////////////////////////////
+      source.modifyProblemPersonTypeAM.show();
+    }
+  }
+
+  /**
+   * 个人问题表格删除按钮click事件
+   * @param event 事件对象
+   */
+  problemPersonTypeTableRemoveButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    source.removeDataUuid = $(this).parent().attr("data-uuid");
+    source.removeConfirmWindow.show("确认要删除个人问题吗？");
+  }
+
+  /**
+   * 删除确认窗确认按钮click事件
+   * @param event 事件对象
+   */
+  removeConfirmWindowConfirmButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    ////////////////////////////////////////////////////////////////////////////
+    // 参数检查数组。
+    ////////////////////////////////////////////////////////////////////////////
+    const parameterCheckArray = new Array();
+    parameterCheckArray.push({"name": "uuid", "value": source.removeDataUuid, "id": source.removeConfirmWindow.contentLabel.getId(), "allow_null": false, "custom_error_message": null});
+    ////////////////////////////////////////////////////////////////////////////
+    // 检查参数。
+    ////////////////////////////////////////////////////////////////////////////
+    for (let i = 0; i < parameterCheckArray.length; i++) {
+      const parameterObj = parameterCheckArray[i];
+      if (!Module.checkParameter(source.problemPersonTypeRule, "removeProblemPersonType", parameterObj, source, function error(source, errorMessage) {
+        source.removeConfirmWindow.showResultInfo("error", errorMessage);
+      })) {
+        return;
+      }
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    // 参数数组。
+    ////////////////////////////////////////////////////////////////////////////
+    const parameterArray = new Array();
+    parameterArray.push({"Account-Token": AccountSecurity.getItem("account_token")});
+    for (let i = 0; i < parameterCheckArray.length; i++) {
+      const parameter = parameterCheckArray[i];
+      const param = {};
+      param[parameter.name] = parameter.value;
+      parameterArray.push(param);
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    // 删除个人问题。
+    ////////////////////////////////////////////////////////////////////////////
+    Network.request(Network.RequestType.POST, Network.ResponseType.JSON, [{"Content-Type": "application/x-www-form-urlencoded"}],
+      Configure.getServerUrl() + "/module/supervision.spot.ProblemPersonType/removeProblemPersonType", parameterArray, source,
+      function loadStart(xhr, xhrEvent, source) {
+        source.removeConfirmWindow.hideResultInfo(); // 隐藏结果信息。
+        source.removeConfirmWindow.frozenControl("removeProblemPersonType"); // 冻结控件。
+      },
+      function error(xhr, xhrEvent, source) {
+        source.removeConfirmWindow.showResultInfo("error", "网络请求失败");
+      },
+      function timeout(xhr, xhrEvent, source) {
+        source.removeConfirmWindow.showResultInfo("error", "网络请求超时");
+      },
+      function readyStateChange(xhr, xhrEvent, source) {
+        if ((XMLHttpRequest.DONE == xhr.readyState) && (200 == xhr.status)) {
+          source.removeConfirmWindow.recoverControl("removeProblemPersonType"); // 恢复控件。
+          //////////////////////////////////////////////////////////////////////
+          // 响应结果。
+          //////////////////////////////////////////////////////////////////////
+          const responseResult = xhr.response;
+          if (Toolkit.stringEqualsIgnoreCase("SUCCESS", responseResult.status)) {
+            ////////////////////////////////////////////////////////////////////
+            // 显示成功信息。
+            ////////////////////////////////////////////////////////////////////
+            source.removeConfirmWindow.showResultInfo("success", "删除成功");
+            ////////////////////////////////////////////////////////////////////
+            // 删除完成。
+            ////////////////////////////////////////////////////////////////////
+            source.removeConfirmWindow.complete();
+            ////////////////////////////////////////////////////////////////////
+            // 获取个人问题。
+            ////////////////////////////////////////////////////////////////////
+            source.getProblemPersonType();
+          } else if (Toolkit.stringEqualsIgnoreCase("ERROR", responseResult.status)) {
+            source.removeConfirmWindow.showResultInfo("error", responseResult.attach);
+          } else {
+            source.removeConfirmWindow.showResultInfo("error", "操作异常");
+          }
+        }
+      }
+    );
+  }
+
+  /**
+   * 获取个人问题
+   */
+  getProblemPersonType() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取个人问题。
+    ////////////////////////////////////////////////////////////////////////////
+    Network.request(Network.RequestType.POST, Network.ResponseType.JSON, [{"Content-Type": "application/x-www-form-urlencoded"}],
+      Configure.getServerUrl() + "/module/supervision.spot.ProblemPersonType/getProblemPersonType", [{"Account-Token": AccountSecurity.getItem("account_token")}], this,
+      function loadStart(xhr, xhrEvent, source) {
+        source.frozenControl("getProblemPersonType"); // 冻结控件。
+        source.waitMask.show(); // 显示等待遮蔽。
+      },
+      function error(xhr, xhrEvent, source) {
+        Error.redirect("../home/error.html", "获取个人问题", "网络请求失败", window.location.href);
+      },
+      function timeout(xhr, xhrEvent, source) {
+        Error.redirect("../home/error.html", "获取个人问题", "网络请求超时", window.location.href);
+      },
+      function readyStateChange(xhr, xhrEvent, source) {
+        if ((XMLHttpRequest.DONE == xhr.readyState) && (200 == xhr.status)) {
+          source.recoverControl("getProblemPersonType"); // 恢复控件。
+          source.waitMask.hide(); // 隐藏等待遮蔽。
+          //////////////////////////////////////////////////////////////////////
+          // 响应结果。
+          //////////////////////////////////////////////////////////////////////
+          const responseResult = xhr.response;
+          if (Toolkit.stringEqualsIgnoreCase("SUCCESS", responseResult.status)) {
+            ////////////////////////////////////////////////////////////////////
+            // 清空数组。
+            ////////////////////////////////////////////////////////////////////
+            source.problemPersonTypeArray.splice(0, source.problemPersonTypeArray.length);
+            ////////////////////////////////////////////////////////////////////
+            // 更新数组。
+            ////////////////////////////////////////////////////////////////////
+            for (let i = 0; i < responseResult.content.array.length; i++) {
+              source.problemPersonTypeArray.push(responseResult.content.array[i]);
+            }
+            ////////////////////////////////////////////////////////////////////
+            // 恢复控件。
+            ////////////////////////////////////////////////////////////////////
+            source.recoverControl("getProblemPersonType");
+            ////////////////////////////////////////////////////////////////////
+            // 如果个人问题数组不为空，则添加表格数据。
+            ////////////////////////////////////////////////////////////////////
+            if (0 < source.problemPersonTypeArray.length) {
+              let code = "";
+              for (let i = 0; i < source.problemPersonTypeArray.length; i++) {
+                const problemPersonType = source.problemPersonTypeArray[i];
+                code += `
+                  <tr data-order = "${problemPersonType.order}">
+                    <td class = "name">${problemPersonType.name}</td>
+                    <td class = "score">${problemPersonType.score}</td>
+                    <td class = "operation" data-uuid = "${problemPersonType.uuid}"><span class = "modify">修改</span><span class = "remove">删除</span></td>
+                  </tr>
+                `;
+              }
+              source.problemPersonTypeTable.getObject().find("tbody").html(code);
+            } else {
+              source.problemPersonTypeTable.getObject().find("tbody").html(`
+                <tr>
+                  <td class = "rowspan" colspan = "3">尚无数据</td>
+                </tr>
+              `);
+            }
+            ////////////////////////////////////////////////////////////////////
+            // 加载完成后注册事件。
+            ////////////////////////////////////////////////////////////////////
+            source.problemPersonTypeTable.getObject().find("tbody").find("tr").find(".operation").find(".modify").off("click").on("click", null, source, source.problemPersonTypeTableModifyButtonClickEvent);
+            source.problemPersonTypeTable.getObject().find("tbody").find("tr").find(".operation").find(".remove").off("click").on("click", null, source, source.problemPersonTypeTableRemoveButtonClickEvent);
+          } else {
+            Error.redirect("../home/error.html", "获取个人问题", responseResult.attach, window.location.href);
+          }
+        }
+      }
+    );
+  }
+
+  /**
+   * 冻结控件
+   * @param name 冻结标记名称
+   */
+  frozenControl(name) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 存入队列。
+    ////////////////////////////////////////////////////////////////////////////
+    this.queue.push(name);
+    this.addProblemPersonTypeButton.getObject().attr("disabled", "disabled");
+  }
+
+  /**
+   * 恢复控件
+   * @param name 恢复标记名称
+   */
+  recoverControl(name) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 队列取出。
+    ////////////////////////////////////////////////////////////////////////////
+    this.queue.pop(name);
+    if (this.queue.isEmpty()) {
+      //////////////////////////////////////////////////////////////////////////
+      // 如果取出了队列中所有的元素才能恢复。
+      //////////////////////////////////////////////////////////////////////////
+      this.addProblemPersonTypeButton.getObject().removeAttr("disabled");
+    }
+  }
+}

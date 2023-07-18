@@ -1,0 +1,22 @@
+.global_pagination {
+  display: inline-block;
+}
+
+.global_pagination button {
+  width: 3.2rem;
+  padding-left: 1.2rem;
+  padding-right: 1.2rem;
+  border-radius: 0rem;
+  margin-left: -0.1rem;
+}
+
+.global_pagination button:first-child {
+  margin-left: 0rem;
+  border-top-left-radius: 0.4rem;
+  border-bottom-left-radius: 0.4rem;
+}
+
+.global_pagination button:last-child {
+  border-top-right-radius: 0.4rem;
+  border-bottom-right-radius: 0.4rem;
+}

@@ -1,0 +1,106 @@
+/******************************************************************************/
+/* 输入框样式 */
+/******************************************************************************/
+.global_input {
+  height: 3rem;
+  color: #333333;
+  text-align: left;
+  font-size: 1.4rem;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: #2f3c48;
+  border-radius: 0.4rem;
+  padding: 0rem 1rem 0rem 1rem;
+  background-color: #ffffff;
+  box-shadow: inset 0rem 0.1rem 0.1rem 0rem rgba(47, 60, 72, 0.1), 0rem 0.1rem 0.1rem 0rem rgba(47, 60, 72, 0.1);
+}
+
+.global_input:hover {
+  color: #666666;
+}
+
+.global_input:focus {
+  color: #000000;
+  background-color: rgba(47, 60, 72, 0.2);
+}
+
+.global_input:disabled {
+  color: #cccccc;
+  border-color: #d7d7d7;
+  background-color: #fafafa;
+  box-shadow: inset 0rem 0.1rem 0.1rem 0rem rgba(215, 215, 215, 0.1), 0rem 0.1rem 0.1rem 0rem rgba(215, 215, 215, 0.1);
+}
+
+/* WebKit */
+.global_input::-webkit-input-placeholder {
+  color: #cccccc;
+  font-size: 1.4rem;
+}
+
+.global_input:hover::-webkit-input-placeholder {
+  color: #666666;
+}
+
+.global_input:focus::-webkit-input-placeholder {
+  color: #ffffff;
+}
+
+/* Mozilla Firefox 4 to 18 */
+.global_input:-moz-input-placeholder {
+  color: #cccccc;
+  font-size: 1.4rem;
+}
+
+.global_input:hover:-moz-input-placeholder {
+  color: #666666;
+}
+
+.global_input:focus:-moz-input-placeholder {
+  color: #ffffff;
+}
+
+/* Mozilla Firefox 19+ */
+.global_input::-moz-input-placeholder {
+  color: #cccccc;
+  font-size: 1.4rem;
+}
+
+.global_input:hover::-moz-input-placeholder {
+  color: #666666;
+}
+
+.global_input:focus::-moz-input-placeholder {
+  color: #ffffff;
+}
+
+/* Internet Explorer 10+ */
+.global_input:-ms-input-placeholder {
+  color: #cccccc;
+  font-size: 1.4rem;
+}
+
+.global_input:hover:-ms-input-placeholder {
+  color: #666666;
+}
+
+.global_input:focus:-ms-input-placeholder {
+  color: #ffffff;
+}
+
+.global_input[type=checkbox] {
+  width: 1.6rem;
+  height: 1.6rem;
+  cursor: pointer;
+  font-size: 0rem;
+  box-shadow: none;
+  vertical-align: middle;
+}
+
+.global_input[type=radio] {
+  width: 1.6rem;
+  height: 1.6rem;
+  cursor: pointer;
+  font-size: 0rem;
+  box-shadow: none;
+  vertical-align: middle;
+}

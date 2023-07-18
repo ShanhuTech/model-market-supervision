@@ -1,0 +1,30 @@
+/******************************************************************************/
+/* 文本区域样式 */
+/******************************************************************************/
+.global_textarea {
+  resize: none;
+  color: #333333;
+  font-size: 1.4rem;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: #2f3c48;
+  border-radius: 0.4rem;
+  padding: 1rem;
+  background-color: #ffffff;
+  box-shadow: inset 0rem 0.1rem 0.1rem 0rem rgba(47, 60, 72, 0.1), 0rem 0.1rem 0.1rem 0rem rgba(47, 60, 72, 0.1);
+}
+
+.global_textarea:hover {
+  color: #666666;
+}
+
+.global_textarea:focus {
+  background-color: rgba(47, 60, 72, 0.2);
+}
+
+.global_textarea:disabled {
+  color: #cccccc;
+  border-color: #d7d7d7;
+  background-color: #fafafa;
+  box-shadow: inset 0rem 0.1rem 0.1rem 0rem rgba(215, 215, 215, 0.1), 0rem 0.1rem 0.1rem 0rem rgba(215, 215, 215, 0.1);
+}

@@ -1,0 +1,3 @@
+# 忽略目录
+/repository
+/webapp/bp/plugin/tailwind/node_modules/

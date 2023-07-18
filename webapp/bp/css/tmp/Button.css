@@ -1,0 +1,106 @@
+/******************************************************************************/
+/* 按钮样式 */
+/******************************************************************************/
+.global_button_primary {
+  height: 3rem;
+  color: #ffffff;
+  text-align: center;
+  font-size: 1.4rem;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: #2f3c48;
+  border-radius: 0.4rem;
+  padding: 0rem 0rem 0rem 0rem;
+  background-color: #2f3c48;
+  cursor: pointer;
+  user-select: none;
+}
+
+.global_button_primary:hover {
+  color: #ffe400;
+}
+
+.global_button_primary:focus {
+  color: #ffe400;
+}
+
+.global_button_primary:active {
+  color: #ffe400;
+}
+
+.global_button_primary:disabled {
+  color: #e4e4e4;
+  border-color: #a1a1a1;
+  background-color: #a1a1a1;
+  cursor: not-allowed;
+}
+
+.global_button_default {
+  height: 3rem;
+  color: #333333;
+  text-align: center;
+  font-size: 1.4rem;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: #cccccc;
+  border-radius: 0.4rem;
+  padding: 0rem 0rem 0rem 0rem;
+  background-color: #ffffff;
+  cursor: pointer;
+  user-select: none;
+}
+
+.global_button_default:hover {
+  color: #ff8556;
+}
+
+.global_button_default:focus {
+  color: #bea47e;
+}
+
+.global_button_default:active {
+  color: #ffcc33;
+}
+
+.global_button_default:disabled {
+  color: #e4e4e4;
+  border-color: #d7d7d7;
+  cursor: not-allowed;
+}
+
+.global_button_danger {
+  height: 3rem;
+  color: #ffffff;
+  text-align: center;
+  font-size: 1.4rem;
+  border-style: solid;
+  border-width: 0.1rem;
+  border-color: #d43f3a;
+  border-radius: 0.4rem;
+  padding: 0rem 0rem 0rem 0rem;
+  background-color: #d9534f;
+  cursor: pointer;
+  user-select: none;
+}
+
+.global_button_danger:hover {
+  border-color: #ac2925;
+  background-color: #c9302c;
+}
+
+.global_button_danger:focus {
+  border-color: #761c19;
+  background-color: #c9302c;
+}
+
+.global_button_danger:active {
+  border-color: #ac2925;
+  background-color: #c9302c;
+}
+
+.global_button_danger:disabled {
+  color: #f2f2f2;
+  border-color: #ecaaa8;
+  background-color: #ecaaa8;
+  cursor: not-allowed;
+}

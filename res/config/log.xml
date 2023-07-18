@@ -1,0 +1,6 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE xml>
+<log>
+    <!-- ${PROJECT_HOME}变量表示项目目录 -->
+    <path><![CDATA[${PROJECT_HOME}/log]]></path>
+</log>

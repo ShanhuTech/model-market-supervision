@@ -1,0 +1,55 @@
+<?xml version = "1.0" encoding = "utf-8"?>
+<!DOCTYPE xml>
+<tomcat>
+    <!-- 工作目录 -->
+    <base_dir>work</base_dir>
+    <!-- 项目名称 -->
+    <project_name><![CDATA[mms]]></project_name>
+    <!-- 端口 -->
+    <port>9110</port>
+    <!-- webapp映射名称（http://${ip}:${port}/${webapp_mapping_name}/... -->
+    <webapp_mapping_name>/webapp</webapp_mapping_name>
+    <!-- webapp错误页面（仅是在webapp映射目录下的错误页面） -->
+    <webapp_error_page>
+        <!-- 如果需要添加错误页面取消注解，并添加对应错误代码的页面位置（根目录在${webapp_mapping_name}，必须以/开始） -->
+        <!-- <error_page>
+            <code>404</code>
+            <location>/404.html</location>
+        </error_page>
+        <error_page>
+            <code>500</code>
+            <location>/500.html</location>
+        </error_page> -->
+    </webapp_error_page>
+    <!-- ${PROJECT_HOME}变量表示项目目录 -->
+    <!-- webapp路径 -->
+    <webapp_path>${PROJECT_HOME}/webapp</webapp_path>
+    <!-- 最大连接数 -->
+    <max_connections>10000</max_connections>
+    <!-- 服务器等待客户端连接的最大时间（单位：毫秒） -->
+    <connection_timeout>30000</connection_timeout>
+    <!-- 最小线程数 -->
+    <min_spare_threads>100</min_spare_threads>
+    <!-- 最大线程数 -->
+    <max_threads>1000</max_threads>
+    <!-- 同一时间内接受的请求的最大数量 -->
+    <accept_count>500</accept_count>
+    <!-- 是否禁用上传超时机制 -->
+    <disable_upload_timeout>true</disable_upload_timeout>
+    <!-- 上传超时时间（当前值：5分钟）（单位：毫秒） -->
+    <connection_upload_timeout>300000</connection_upload_timeout>
+    <!-- 一个tcp连接中发送多个HTTP请求和响应的时间（当前值：60秒）（单位：毫秒） -->
+    <keep_alive_timeout>60000</keep_alive_timeout>
+    <!-- 是否对响应数据压缩（on：启用；off：禁用；force：强制） -->
+    <compression>on</compression>
+    <!-- 响应数据长度大于设置值时启用压缩（compression设置为on时才有效）（当前值：2KB）（单位：字节） -->
+    <compression_min_size>2048</compression_min_size>
+    <!-- 设置响应数据压缩的类型（图便已是压缩模式，所以不需要对图片压缩） -->
+    <compressible_mime_type>text/html,text/xml,text/plain,text/css,text/javascript,application/javascript,application/json,application/xml,image/svg+xml</compressible_mime_type>
+    <!-- 最大http请求头大小（当前值：10KB）（单位：字节） -->
+    <max_http_header_size>10240</max_http_header_size>
+    <!-- 最大整个请求大小（当前值：100MB）（单位：字节） -->
+    <max_swallow_size>104857600</max_swallow_size>
+    <!-- 最大保存请求体（请求的实体部分）大小（当前值：100MB）（单位：字节） -->
+    <max_save_post_size>104857600</max_save_post_size>
+</tomcat>

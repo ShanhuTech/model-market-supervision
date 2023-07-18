@@ -1,0 +1,823 @@
+"use strict";
+
+class DepartmentProblemType {
+  /**
+   * 构造函数
+   *
+   * @param ruleArray 规则数组
+   */
+  constructor(ruleArray) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 单位问题类型规则。
+    ////////////////////////////////////////////////////////////////////////////
+    this.problemDepartmentTypeRule = ruleArray[0];
+    ////////////////////////////////////////////////////////////////////////////
+    // 部门问题类型数组。
+    ////////////////////////////////////////////////////////////////////////////
+    this.problemDepartmentTypeArray = new Array();
+    ////////////////////////////////////////////////////////////////////////////
+    // 队列。
+    ////////////////////////////////////////////////////////////////////////////
+    this.queue = new Queue();
+    ////////////////////////////////////////////////////////////////////////////
+    // 传递参数。
+    ////////////////////////////////////////////////////////////////////////////
+    this.departmentUuid = Toolkit.getUrlParameter("department_uuid");
+    this.returnDepartmentListParameter = Toolkit.getUrlParameter("return_department_list_parameter"); // 不解码直接返回编码格式
+    ////////////////////////////////////////////////////////////////////////////
+    // 保存前的角色名称的数据。
+    ////////////////////////////////////////////////////////////////////////////
+    this.beforeSaveRoleNameData = {
+      "uuid": null,
+      "enabled": false,
+    };
+    ////////////////////////////////////////////////////////////////////////////
+    // 提示显示的时间。
+    ////////////////////////////////////////////////////////////////////////////
+    this.promptShowTime = 1000;
+  }
+
+  /**
+   * 生成代码
+   */
+  generateCode() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container = new JSControl("div");
+    ////////////////////////////////////////////////////////////////////////////
+    // 工具栏。
+    ////////////////////////////////////////////////////////////////////////////
+    this.toolbar = new JSControl("div");
+    ////////////////////////////////////////////////////////////////////////////
+    // 返回列表按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.returnListButton = new JSControl("button");
+    ////////////////////////////////////////////////////////////////////////////
+    // 保存按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.saveButton = new JSControl("button");
+    ////////////////////////////////////////////////////////////////////////////
+    // 提示。
+    ////////////////////////////////////////////////////////////////////////////
+    this.prompt = new Prompt();
+    ////////////////////////////////////////////////////////////////////////////
+    // 部门问题类型表格。
+    ////////////////////////////////////////////////////////////////////////////
+    this.departmentProblemTypeTable = new JSControl("table");
+    ////////////////////////////////////////////////////////////////////////////
+    // 全选多选框。
+    ////////////////////////////////////////////////////////////////////////////
+    this.selectAllCheckbox = new JSControl("input");
+    ////////////////////////////////////////////////////////////////////////////
+    // 等待遮蔽。
+    ////////////////////////////////////////////////////////////////////////////
+    this.waitMask = new WaitMask();
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.setAttribute(
+      {
+        "class": "global_scroll global_scroll_dark container"
+      }
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    // 工具栏。
+    ////////////////////////////////////////////////////////////////////////////
+    this.toolbar.setAttribute(
+      {
+        "class": "tool_bar"
+      }
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    // 返回列表按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.returnListButton.setAttribute(
+      {
+        "class": "global_button_primary return_list_button"
+      }
+    );
+    this.returnListButton.setContent("返回单位列表");
+    ////////////////////////////////////////////////////////////////////////////
+    // 保存按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.saveButton.setAttribute(
+      {
+        "class": "global_button_primary save_button"
+      }
+    );
+    this.saveButton.setContent("保存");
+    ////////////////////////////////////////////////////////////////////////////
+    // 提示。
+    ////////////////////////////////////////////////////////////////////////////
+    this.prompt.setAttribute(
+      {
+        "class": "global_prompt"
+      }
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    // 部门问题类型表格。
+    ////////////////////////////////////////////////////////////////////////////
+    this.departmentProblemTypeTable.setAttribute(
+      {
+        "class": "global_table menu_table"
+      }
+    );
+    const tableHead = `
+      <tr>
+        <td class = "select_checkbox"></td>
+        <td class = "name">名称</td>
+        <td class = "description">描述</td>
+      </tr>
+    `;
+    this.departmentProblemTypeTable.setContent(`
+      <thead>${tableHead}</thead>
+      <tbody>
+        <tr>
+          <td class = "rowspan" colspan = "3">尚无数据</td>
+        </tr>
+      </tbody>
+    `);
+    ////////////////////////////////////////////////////////////////////////////
+    // 全选多选框。
+    ////////////////////////////////////////////////////////////////////////////
+    this.selectAllCheckbox.setAttribute(
+      {
+        "class": "global_input",
+        "type": "checkbox"
+      }
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    // 等待遮蔽。
+    ////////////////////////////////////////////////////////////////////////////
+    this.waitMask.setAttribute(
+      {
+        "class": "global_wait_mask"
+      }
+    );
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 工具栏。
+    ////////////////////////////////////////////////////////////////////////////
+    this.toolbar.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 返回列表按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.returnListButton.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 保存按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.saveButton.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 提示。
+    ////////////////////////////////////////////////////////////////////////////
+    this.prompt.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 部门问题类型表格。
+    ////////////////////////////////////////////////////////////////////////////
+    this.departmentProblemTypeTable.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 全选多选框。
+    ////////////////////////////////////////////////////////////////////////////
+    this.selectAllCheckbox.generateCode();
+    ////////////////////////////////////////////////////////////////////////////
+    // 等待遮蔽。
+    ////////////////////////////////////////////////////////////////////////////
+    this.waitMask.generateCode();
+  }
+
+  /**
+   * 初始化视图
+   */
+  initView() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 页面添加容器。
+    ////////////////////////////////////////////////////////////////////////////
+    $("body").html(this.container.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加工具栏。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.toolbar.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 工具栏添加返回列表按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.toolbar.getObject().append(this.returnListButton.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 工具栏添加保存按钮。
+    ////////////////////////////////////////////////////////////////////////////
+    this.toolbar.getObject().append(this.saveButton.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加部门问题类型表格。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.departmentProblemTypeTable.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 部门问题类型表格添加全选多选框。
+    ////////////////////////////////////////////////////////////////////////////
+    this.departmentProblemTypeTable.getObject().find("thead").find(".select_checkbox").html(this.selectAllCheckbox.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加提示。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.prompt.getCode());
+    ////////////////////////////////////////////////////////////////////////////
+    // 容器添加等待遮蔽。
+    ////////////////////////////////////////////////////////////////////////////
+    this.container.getObject().append(this.waitMask.getCode());
+  }
+
+  /**
+   * 初始化布局
+   */
+  initLayout() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 设置提示的宽度和绝对位置。这里没有必要将样式提取至css，直接写入计算即可。
+    ////////////////////////////////////////////////////////////////////////////
+    const saveButtonTop = this.saveButton.getObject().offset().top;
+    const saveButtonLeft = this.saveButton.getObject().offset().left;
+    const saveButtonWidth = Toolkit.getDomElementRect(this.saveButton.getObject().get(0)).width;
+    const saveButtonHeight = Toolkit.getDomElementRect(this.saveButton.getObject().get(0)).height;
+    this.prompt.getObject().css("padding-top", "0rem");
+    this.prompt.getObject().css("padding-bottom", "0rem");
+    this.prompt.getObject().css("height", saveButtonHeight + "px");
+    this.prompt.getObject().css("top", saveButtonTop + "px");
+    this.prompt.getObject().css("left", saveButtonLeft + saveButtonWidth + 15 + "px");
+  }
+
+  /**
+   * 初始化事件
+   */
+  initEvent() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 注册返回列表按钮的click事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.returnListButton.getObject().off("click").on("click", null, this, this.returnListButtonClickEvent);
+    ////////////////////////////////////////////////////////////////////////////
+    // 注册保存按钮的click事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.saveButton.getObject().off("click").on("click", null, this, this.saveButtonClickEvent);
+    ////////////////////////////////////////////////////////////////////////////
+    // 注册全选多选框的click事件。
+    ////////////////////////////////////////////////////////////////////////////
+    this.selectAllCheckbox.getObject().off("click").on("click", null, this, this.selectAllCheckboxClickEvent);
+
+
+    // this.getDepartment();
+  }
+
+  /**
+   * 返回列表按钮click事件
+   * @param event 事件对象
+   */
+  returnListButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    window.location.href = `./department_management.html?return_place_list_parameter=${source.returnPlaceListParameter}`;
+  }
+
+  /**
+   * 角色名称下拉框change事件
+   * @param event 事件对象
+   */
+  roleNameSelectChangeEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    ////////////////////////////////////////////////////////////////////////////
+    // 清空所有多选框。
+    ////////////////////////////////////////////////////////////////////////////
+    source.selectAllCheckbox.getObject().prop("checked", false);
+    source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox").prop("checked", false);
+    ////////////////////////////////////////////////////////////////////////////
+    // 定义选中值变量。
+    ////////////////////////////////////////////////////////////////////////////
+    let selectVal = null;
+    ////////////////////////////////////////////////////////////////////////////
+    // 根据保存前的角色名称的数据是否可用，给选中值变量赋值。
+    ////////////////////////////////////////////////////////////////////////////
+    if (source.beforeSaveRoleNameData.enabled) {
+      selectVal = source.beforeSaveRoleNameData.uuid;
+    } else {
+      //////////////////////////////////////////////////////////////////////////
+      // 获取角色名称下拉框选中值。
+      //////////////////////////////////////////////////////////////////////////
+      selectVal = source.roleNameSelect.getObject().val();
+    }
+    if (0 < selectVal.length) {
+      let roleObj = null;
+      //////////////////////////////////////////////////////////////////////////
+      // 根据角色名称下拉框选中的值，获取角色数组对象。
+      //////////////////////////////////////////////////////////////////////////
+      for (let i = 0; i < source.roleArray.length; i++) {
+        if (selectVal == source.roleArray[i].uuid) {
+          roleObj = source.roleArray[i];
+          break;
+        }
+      }
+      //////////////////////////////////////////////////////////////////////////
+      // 如果找到了角色数组对象，则根据对象配置的部门问题类型取得当前角色的部门问题类型。
+      //////////////////////////////////////////////////////////////////////////
+      if (null != roleObj) {
+        if ((null != roleObj.menus) && (0 < roleObj.menus.length)) {
+          for (let i = 0; i < roleObj.menus.length; i++) {
+            const menu = roleObj.menus[i];
+            source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(`:checkbox[value="${menu.uuid}"]`).prop("checked", true);
+          }
+        }
+        ////////////////////////////////////////////////////////////////////////
+        // 如果每个多选框都选中，则选中全选多选框。
+        ////////////////////////////////////////////////////////////////////////
+        const all = source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox").length;
+        const checked = source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox:checked").length;
+        if (all == checked) {
+          source.selectAllCheckbox.getObject().prop("checked", true);
+        }
+      }
+    }
+  }
+
+  /**
+   * 保存按钮click事件
+   * @param event 事件对象
+   */
+  saveButtonClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取角色名称下拉框选中值。
+    ////////////////////////////////////////////////////////////////////////////
+    // const selectVal = source.roleNameSelect.getObject().val();
+    const selectVal = source.departmentUuid;
+    if (0 < selectVal.length) {
+      const checkedList = source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox:checked");
+      // if (0 >= checkedList.length) {
+      //   source.prompt.show("error", "至少选择一个部门问题类型", source.promptShowTime);
+      // } else {
+        ////////////////////////////////////////////////////////////////////////
+        // 遍历多选框选中项并组成部门问题类型参数。
+        ////////////////////////////////////////////////////////////////////////
+        // debugger;
+        let problemTypes = "";
+        checkedList.each(function() {
+          problemTypes += `${$(this).val()};`;
+        });
+      if (0 >= problemTypes.length) {
+        problemTypes = null;
+      }
+        ////////////////////////////////////////////////////////////////////////
+        // 参数检查数组。
+        ////////////////////////////////////////////////////////////////////////
+        const parameterCheckArray = new Array();
+        // parameterCheckArray.push({"name": "uuid", "value": selectVal, "id": source.roleNameSelect.getId(), "allow_null": false, "custom_error_message": null});
+        parameterCheckArray.push({"name": "uuid", "value": selectVal, "id": "0", "allow_null": false, "custom_error_message": null});
+        parameterCheckArray.push({"name": "problem_types", "value": problemTypes, "id": "0", "allow_null": true, "custom_error_message": null});
+        // ////////////////////////////////////////////////////////////////////////
+        // // 检查参数。
+        // ////////////////////////////////////////////////////////////////////////
+        // for (let i = 0; i < parameterCheckArray.length; i++) {
+        //   const parameterObj = parameterCheckArray[i];
+        //   if (!Module.checkParameter(source.problemDepartmentTypeRule, "modifyProblemType", parameterObj, source, function error(source, errorMessage) {
+        //     source.prompt.show("error", errorMessage, source.promptShowTime);
+        //   })) {
+        //     return;
+        //   }
+        // }
+        ////////////////////////////////////////////////////////////////////////
+        // 参数数组。
+        ////////////////////////////////////////////////////////////////////////
+        const parameterArray = new Array();
+        parameterArray.push({"Account-Token": AccountSecurity.getItem("account_token")});
+        for (let i = 0; i < parameterCheckArray.length; i++) {
+          const parameter = parameterCheckArray[i];
+          const param = {};
+          param[parameter.name] = parameter.value;
+          parameterArray.push(param);
+        }
+        ////////////////////////////////////////////////////////////////////////
+        // 修改部门问题类型。
+        ////////////////////////////////////////////////////////////////////////
+        Network.request(Network.RequestType.POST, Network.ResponseType.JSON, [{"Content-Type": "application/x-www-form-urlencoded"}],
+          Configure.getServerUrl() + "/module/supervision.spot.Department/modifyProblemType", parameterArray, source,
+          function loadStart(xhr, xhrEvent, source) {
+            source.frozenControl("modifyDepartmentProblemType");// 冻结控件。
+            source.waitMask.show(); // 显示等待遮蔽。
+          },
+          function error(xhr, xhrEvent, source) {
+            source.prompt.show("error", "网络请求失败", source.promptShowTime);
+          },
+          function timeout(xhr, xhrEvent, source) {
+            source.prompt.show("error", "网络请求超时", source.promptShowTime);
+          },
+          function readyStateChange(xhr, xhrEvent, source) {
+            if ((XMLHttpRequest.DONE == xhr.readyState) && (200 == xhr.status)) {
+              source.recoverControl("modifyDepartmentProblemType"); // 恢复控件。
+              source.waitMask.hide(); // 隐藏等待遮蔽。
+              //////////////////////////////////////////////////////////////////
+              // 响应结果。
+              //////////////////////////////////////////////////////////////////
+              const responseResult = xhr.response;
+              if (Toolkit.stringEqualsIgnoreCase("SUCCESS", responseResult.status)) {
+                ////////////////////////////////////////////////////////////////
+                // 存储保存前的角色名称的数据。
+                ////////////////////////////////////////////////////////////////
+                // source.beforeSaveRoleNameData.uuid = source.roleNameSelect.getObject().val();
+                source.beforeSaveRoleNameData.enabled = true;
+                ////////////////////////////////////////////////////////////////
+                // 显示成功信息。
+                ////////////////////////////////////////////////////////////////
+                // source.prompt.show("success", "修改成功", source.promptShowTime);
+                alert("修改成功");
+              } else {
+                // source.prompt.show("error", responseResult.attach, source.promptShowTime);
+                alert(responseResult.attach);
+              }
+            }
+          }
+        );
+      // }
+    } else {
+      // source.prompt.show("error", "请先选择一个角色", source.promptShowTime);
+      alert("请先选择一个角色");
+    }
+  }
+
+  /**
+   * 全选多选框click事件
+   * @param event 事件对象
+   */
+  selectAllCheckboxClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取角色名称下拉框选中值。
+    ////////////////////////////////////////////////////////////////////////////
+    if (source.selectAllCheckbox.getObject().is(":checked")) {
+      source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox").prop("checked", true);
+    } else {
+      source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox").prop("checked", false);
+    }
+  }
+
+  /**
+   * 部门问题类型表格中多选框click事件
+   * @param event 事件对象
+   */
+  departmentProblemTypeTableCheckboxClickEvent(event) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取调用源。
+    ////////////////////////////////////////////////////////////////////////////
+    const source = event.data;
+    ////////////////////////////////////////////////////////////////////////////
+    // 如果部门问题类型表格多选框取消了任意一个，则取消全选多选框。
+    ////////////////////////////////////////////////////////////////////////////
+    if (source.selectAllCheckbox.getObject().is(":checked")) {
+      source.selectAllCheckbox.getObject().prop("checked", false);
+    } else {
+      //////////////////////////////////////////////////////////////////////////
+      // 如果全部选中了部门问题类型表格中所有的多选框，则选中全选多选框。
+      //////////////////////////////////////////////////////////////////////////
+      const all = source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox").length;
+      const checked = source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox:checked").length;
+      if (all == checked) {
+        source.selectAllCheckbox.getObject().prop("checked", true);
+      }
+    }
+  }
+
+  /**
+   * 获取部门问题类型
+   */
+  getProblemDepartmentType() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取部门问题类型。
+    ////////////////////////////////////////////////////////////////////////////
+    Network.request(Network.RequestType.POST, Network.ResponseType.JSON, [{"Content-Type": "application/x-www-form-urlencoded"}],
+      Configure.getServerUrl() + "/module/supervision.spot.ProblemDepartmentType/getProblemDepartmentType", [{"Account-Token": AccountSecurity.getItem("account_token")}], this,
+      function loadStart(xhr, xhrEvent, source) {
+        source.frozenControl("getMenu"); // 冻结控件。
+        source.waitMask.show(); // 显示等待遮蔽。
+      },
+      function error(xhr, xhrEvent, source) {
+        Error.redirect("../home/error.html", "获取部门问题类型", "网络请求失败", window.location.href);
+      },
+      function timeout(xhr, xhrEvent, source) {
+        Error.redirect("../home/error.html", "获取部门问题类型", "网络请求超时", window.location.href);
+      },
+      function readyStateChange(xhr, xhrEvent, source) {
+        if ((XMLHttpRequest.DONE == xhr.readyState) && (200 == xhr.status)) {
+          source.recoverControl("getMenu"); // 恢复控件。
+          source.waitMask.hide(); // 隐藏等待遮蔽。
+          //////////////////////////////////////////////////////////////////////
+          // 响应结果。
+          //////////////////////////////////////////////////////////////////////
+          const responseResult = xhr.response;
+          if (Toolkit.stringEqualsIgnoreCase("SUCCESS", responseResult.status)) {
+            ////////////////////////////////////////////////////////////////////
+            // 更新部门问题类型数组。
+            ////////////////////////////////////////////////////////////////////
+            source.updateMenuArray(source, responseResult.content.array);
+            ////////////////////////////////////////////////////////////////////
+            // 恢复控件。
+            ////////////////////////////////////////////////////////////////////
+            source.recoverControl("getMenu");
+            ////////////////////////////////////////////////////////////////////
+            // 如果部门问题类型数组不为空，则添加表格数据。
+            ////////////////////////////////////////////////////////////////////
+            if (0 < source.problemDepartmentTypeArray.length) {
+              let code = "";
+              for (let i = 0; i < source.problemDepartmentTypeArray.length; i++) {
+                const menu = source.problemDepartmentTypeArray[i];
+                let menuLevelClassName = "";
+                if (1 == menu.level) {
+                  // 一级部门问题类型
+                  menuLevelClassName = "menu_level_one";
+                } else if (2 == menu.level) {
+                  // 二级部门问题类型
+                  menuLevelClassName = "menu_level_two";
+                } else {
+                  // 三级部门问题类型
+                  menuLevelClassName = "menu_level_three";
+                }
+                let description = "";
+                ////////////////////////////////////////////////////////////////
+                // 根据显示要求优化数据。
+                ////////////////////////////////////////////////////////////////
+                if (null == menu.description) {
+                  description = "无";
+                } else {
+                  description = menu.description;
+                }
+                code += `
+                  <tr data-parent_uuid = "${menu.parent_uuid}" data-order = "${menu.order}">
+                    <td class = "select_checkbox"><input class = "global_input" type = "checkbox" value = "${menu.uuid}" /></td>
+                    <td class = "name ${menuLevelClassName}">${menu.name}</td>
+                    <td class = "description">${description}</td>
+                  </tr>
+                `;
+              }
+              source.departmentProblemTypeTable.getObject().find("tbody").html(code);
+              source.getDepartment();
+            } else {
+              source.departmentProblemTypeTable.getObject().find("tbody").html(`
+                <tr>
+                  <td class = "rowspan" colspan = "3">尚无数据</td>
+                </tr>
+              `);
+            }
+          } else {
+            Error.redirect("../home/error.html", "获取部门问题类型", responseResult.attach, window.location.href);
+          }
+        }
+      }
+    );
+  }
+
+  /**
+   * 获取部门
+   */
+  getDepartment() {
+    ////////////////////////////////////////////////////////////////////////////
+    // 获取部门问题类型。
+    ////////////////////////////////////////////////////////////////////////////
+    Network.request(Network.RequestType.POST, Network.ResponseType.JSON, [{"Content-Type": "application/x-www-form-urlencoded"}],
+      Configure.getServerUrl() + "/module/supervision.spot.Department/getDepartment", [{"Account-Token": AccountSecurity.getItem("account_token")}, {"uuid": this.departmentUuid}], this,
+      function loadStart(xhr, xhrEvent, source) {
+        source.frozenControl("getDepartment"); // 冻结控件。
+        source.waitMask.show(); // 显示等待遮蔽。
+      },
+      function error(xhr, xhrEvent, source) {
+        Error.redirect("../home/error.html", "获取部门", "网络请求失败", window.location.href);
+      },
+      function timeout(xhr, xhrEvent, source) {
+        Error.redirect("../home/error.html", "获取部门", "网络请求超时", window.location.href);
+      },
+      function readyStateChange(xhr, xhrEvent, source) {
+        if ((XMLHttpRequest.DONE == xhr.readyState) && (200 == xhr.status)) {
+          source.recoverControl("getDepartment"); // 恢复控件。
+          source.waitMask.hide(); // 隐藏等待遮蔽。
+          //////////////////////////////////////////////////////////////////////
+          // 响应结果。
+          //////////////////////////////////////////////////////////////////////
+          const responseResult = xhr.response;
+          if (Toolkit.stringEqualsIgnoreCase("SUCCESS", responseResult.status)) {
+            // ////////////////////////////////////////////////////////////////////
+            // // 更新部门问题类型数组。
+            // ////////////////////////////////////////////////////////////////////
+            // source.updateMenuArray(source, responseResult.content.array);
+            const departmentData = responseResult.content.array;
+            ////////////////////////////////////////////////////////////////////
+            // 恢复控件。
+            ////////////////////////////////////////////////////////////////////
+            source.recoverControl("getDepartment");
+
+            ////////////////////////////////////////////////////////////////////////////
+            // 清空所有多选框。
+            ////////////////////////////////////////////////////////////////////////////
+            source.selectAllCheckbox.getObject().prop("checked", false);
+            source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox").prop("checked", false);
+            ////////////////////////////////////////////////////////////////////////////
+            // 定义选中值变量。
+            ////////////////////////////////////////////////////////////////////////////
+            let selectVal = source.departmentUuid;
+            // ////////////////////////////////////////////////////////////////////////////
+            // // 根据保存前的角色名称的数据是否可用，给选中值变量赋值。
+            // ////////////////////////////////////////////////////////////////////////////
+            // if (source.beforeSaveRoleNameData.enabled) {
+            //   selectVal = source.beforeSaveRoleNameData.uuid;
+            // } else {
+            //   //////////////////////////////////////////////////////////////////////////
+            //   // 获取角色名称下拉框选中值。
+            //   //////////////////////////////////////////////////////////////////////////
+            //   selectVal = source.roleNameSelect.getObject().val();
+            // }
+            if (0 < selectVal.length) {
+              let roleObj = null;
+              //////////////////////////////////////////////////////////////////////////
+              // 根据角色名称下拉框选中的值，获取角色数组对象。
+              //////////////////////////////////////////////////////////////////////////
+              for (let i = 0; i < departmentData.length; i++) {
+                if (selectVal == departmentData[i].uuid) {
+                  roleObj = departmentData[i];
+                  break;
+                }
+              }
+              //////////////////////////////////////////////////////////////////////////
+              // 如果找到了角色数组对象，则根据对象配置的部门问题类型取得当前角色的部门问题类型。
+              //////////////////////////////////////////////////////////////////////////
+              if (null != roleObj) {
+                if ((null != roleObj.problem_types) && (0 < roleObj.problem_types.length)) {
+                  for (let i = 0; i < roleObj.problem_types.length; i++) {
+                    const problemTypes = roleObj.problem_types[i];
+                    source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(`:checkbox[value="${problemTypes.uuid}"]`).prop("checked", true);
+                  }
+                }
+                ////////////////////////////////////////////////////////////////////////
+                // 如果每个多选框都选中，则选中全选多选框。
+                ////////////////////////////////////////////////////////////////////////
+                const all = source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox").length;
+                const checked = source.departmentProblemTypeTable.getObject().find("tbody").find("tr").find("td").find(":checkbox:checked").length;
+                if (all == checked) {
+                  source.selectAllCheckbox.getObject().prop("checked", true);
+                }
+              }
+            }
+            
+          } else {
+            Error.redirect("../home/error.html", "获取部门", responseResult.attach, window.location.href);
+          }
+        }
+      }
+    );
+  }
+
+  /**
+   * 更新部门问题类型数组
+   * @param source 调用源对象
+   * @param array 获取的部门问题类型数组
+   */
+  updateMenuArray(source, array) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 清空部门问题类型数组。
+    ////////////////////////////////////////////////////////////////////////////
+    source.problemDepartmentTypeArray.splice(0, source.problemDepartmentTypeArray.length);
+    ////////////////////////////////////////////////////////////////////////////
+    // 创建一级部门问题类型数组。
+    ////////////////////////////////////////////////////////////////////////////
+    const levelOneMenuArray = new Array();
+    ////////////////////////////////////////////////////////////////////////////
+    // 提取一级部门问题类型数组。
+    ////////////////////////////////////////////////////////////////////////////
+    for (let i = 0; i < array.length; i++) {
+      if (Toolkit.stringEqualsIgnoreCase("0", array[i].parent_uuid)) {
+        ////////////////////////////////////////////////////////////////////////
+        // 存入一级部门问题类型数组。
+        ////////////////////////////////////////////////////////////////////////
+        levelOneMenuArray.push(array[i]);
+      }
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    // 排序一级部门问题类型数组。
+    ////////////////////////////////////////////////////////////////////////////
+    levelOneMenuArray.sort(function(a, b) {
+      return a.order - b.order;
+    });
+    ////////////////////////////////////////////////////////////////////////////
+    // 创建二级部门问题类型数组。
+    ////////////////////////////////////////////////////////////////////////////
+    const levelTwoMenuArray = new Array();
+    ////////////////////////////////////////////////////////////////////////////
+    // 提取二级部门问题类型数组。
+    ////////////////////////////////////////////////////////////////////////////
+    for (let i = 0; i < levelOneMenuArray.length; i++) {
+      for (let j = 0; j < array.length; j++) {
+        if (levelOneMenuArray[i].uuid == array[j].parent_uuid) {
+          //////////////////////////////////////////////////////////////////////
+          // 存入一级部门问题类型数组。
+          //////////////////////////////////////////////////////////////////////
+          levelTwoMenuArray.push(array[j]);
+        }
+      }
+    }
+    ////////////////////////////////////////////////////////////////////////////
+    // 排序二级部门问题类型数组。
+    ////////////////////////////////////////////////////////////////////////////
+    levelTwoMenuArray.sort(function(a, b) {
+      return a.order - b.order;
+    });
+    ////////////////////////////////////////////////////////////////////////////
+    // 整理部门问题类型数组。
+    ////////////////////////////////////////////////////////////////////////////
+    for (let i = 0; i < levelOneMenuArray.length; i++) {
+      //////////////////////////////////////////////////////////////////////////
+      // 设置部门问题类型数组级别。
+      //////////////////////////////////////////////////////////////////////////
+      levelOneMenuArray[i].level = 1;
+      //////////////////////////////////////////////////////////////////////////
+      // 将一级部门问题类型数组存入部门问题类型数组。
+      //////////////////////////////////////////////////////////////////////////
+      source.problemDepartmentTypeArray.push(levelOneMenuArray[i]);
+      for (let j = 0; j < levelTwoMenuArray.length; j++) {
+        if (levelOneMenuArray[i].uuid == levelTwoMenuArray[j].parent_uuid) {
+          //////////////////////////////////////////////////////////////////////
+          // 设置部门问题类型数组级别。
+          //////////////////////////////////////////////////////////////////////
+          levelTwoMenuArray[j].level = 2;
+          //////////////////////////////////////////////////////////////////////
+          // 将二级部门问题类型数组存入部门问题类型数组。
+          //////////////////////////////////////////////////////////////////////
+          source.problemDepartmentTypeArray.push(levelTwoMenuArray[j]);
+          //////////////////////////////////////////////////////////////////////
+          // 创建三级部门问题类型数组。
+          //////////////////////////////////////////////////////////////////////
+          const levelThreeMenuArray = new Array();
+          //////////////////////////////////////////////////////////////////////
+          // 提取三级部门问题类型数组。
+          //////////////////////////////////////////////////////////////////////
+          for (let m = 0; m < array.length; m++) {
+            if (levelTwoMenuArray[j].uuid == array[m].parent_uuid) {
+              //////////////////////////////////////////////////////////////////
+              // 存入三级部门问题类型数组。
+              //////////////////////////////////////////////////////////////////
+              levelThreeMenuArray.push(array[m]);
+            }
+          }
+          //////////////////////////////////////////////////////////////////////
+          // 排序三级部门问题类型数组。
+          //////////////////////////////////////////////////////////////////////
+          levelThreeMenuArray.sort(function(a, b) {
+            return a.order - b.order;
+          });
+          for (let i = 0; i < levelThreeMenuArray.length; i++) {
+            ////////////////////////////////////////////////////////////////////
+            // 设置部门问题类型数组级别。
+            ////////////////////////////////////////////////////////////////////
+            levelThreeMenuArray[i].level = 3;
+            ////////////////////////////////////////////////////////////////////
+            // 将三级部门问题类型数组存入部门问题类型数组。
+            ////////////////////////////////////////////////////////////////////
+            source.problemDepartmentTypeArray.push(levelThreeMenuArray[i]);
+          }
+        }
+      }
+    }
+  }
+
+  /**
+   * 冻结控件
+   * @param name 冻结标记名称
+   */
+  frozenControl(name) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 存入队列。
+    ////////////////////////////////////////////////////////////////////////////
+    this.queue.push(name);
+    this.returnListButton.getObject().attr("disabled", "disabled");
+    this.saveButton.getObject().attr("disabled", "disabled");
+  }
+
+  /**
+   * 恢复控件
+   * @param name 恢复标记名称
+   */
+  recoverControl(name) {
+    ////////////////////////////////////////////////////////////////////////////
+    // 队列取出。
+    ////////////////////////////////////////////////////////////////////////////
+    this.queue.pop(name);
+    if (this.queue.isEmpty()) {
+      //////////////////////////////////////////////////////////////////////////
+      // 如果取出了队列中所有的元素才能恢复。
+      //////////////////////////////////////////////////////////////////////////
+      this.returnListButton.getObject().removeAttr("disabled");
+      this.saveButton.getObject().removeAttr("disabled");
+    }
+  }
+}

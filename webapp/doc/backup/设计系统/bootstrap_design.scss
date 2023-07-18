@@ -1,0 +1,47 @@
+// spacer
+// padding: p-0 p-1 p-2 p-3 p-4 p-5 p-6 p-7 p-8 p-9 p-10 p-11 p-12 p-13 p-14 p-15 p-16
+// margin: m-0 m-1 m-2 m-3 m-4 m-5 m-6 m-7 m-8 m-9 m-10 m-11 m-12 m-13 m-14 m-15 m-16
+$spacer: 1rem;
+$spacers: (
+  0: 0,
+  1: $spacer * 0.25,
+  2: $spacer * 0.5,
+  3: $spacer * 0.75,
+  4: $spacer * 1,
+  5: $spacer * 1.5,
+  6: $spacer * 2,
+  7: $spacer * 3,
+  8: $spacer * 4,
+  9: $spacer * 6,
+  10: $spacer * 8,
+  11: $spacer * 12,
+  12: $spacer * 16,
+  13: $spacer * 24,
+  14: $spacer * 32,
+  15: $spacer * 40,
+  16: $spacer * 48,
+);
+
+// font-size
+// fs-1 fs-2 fs-3 fs-4 fs-5 fs-6 fs-7 fs-8
+$font-size-base: 1rem;
+$h1-font-size: $font-size-base * 3;
+$h2-font-size: $font-size-base * 2;
+$h3-font-size: $font-size-base * 1.5;
+$h4-font-size: $font-size-base * 1.25;
+$h5-font-size: $font-size-base * 1.125;
+$h6-font-size: $font-size-base * 1;
+$h7-font-size: $font-size-base * 0.875;
+$h8-font-size: $font-size-base * 0.75;
+$font-sizes: (
+  1: $h1-font-size,
+  2: $h2-font-size,
+  3: $h3-font-size,
+  4: $h4-font-size,
+  5: $h5-font-size,
+  6: $h6-font-size,
+  7: $h7-font-size,
+  8: $h8-font-size,
+);
+
+@import "./scss/bootstrap.scss"

@@ -1,0 +1,106 @@
+html, body {
+  width: 100%;
+  height: 100%;
+}
+
+.container {
+  width: 100%;
+  height: 100%;
+  padding: 1.5rem;
+  background-color: #f5f5f5;
+  overflow: auto;
+}
+
+.tool_bar {
+  text-align: right;
+  margin-bottom: 1.5rem;
+}
+
+.add_problem_department_type_level_one_button {
+  width: 16rem;
+  margin-right: 1.5rem;
+}
+
+.add_problem_department_type_level_two_button {
+  width: 16rem;
+  margin-right: 1.5rem;
+}
+
+.add_problem_department_type_level_three_button {
+  width: 16rem;
+}
+
+.problem_department_type_table thead tr td {
+  width: auto;
+}
+
+.problem_department_type_table tbody tr .rowspan {
+  text-align: center;
+  user-select: none;
+}
+
+/* 
+ * 类型间距计算方式
+ *
+ * 向下箭头宽度: 1.2rem
+ * 向下箭头padding-left: 1.5rem
+ * 向下箭头距离内容: 1rem
+ * 
+ * 第1级别箭头padding-left: 1.5rem
+ * 第1级别内容padding-left: 1.2（向下箭头宽度：不变） + 1.5（当前级别向下箭头padding-left） + 1（向下箭头距离内容：不变）  = 3.7rem
+ * 
+ * 第2级别箭头padding-left: 3.7rem（即，第1级别内容padding-left）
+ * 第2级别内容padding-left: 1.2（向下箭头宽度：不变） + 3.7（当前级别向下箭头padding-left） + 1（向下箭头距离内容：不变）  = 5.9rem
+ * 
+ * 第3级别箭头padding-left: 5.9rem（即，第1级别内容padding-left）
+ * 第3级别内容padding-left: 1.2（向下箭头宽度：不变） + 5.9（当前级别向下箭头padding-left） + 1（向下箭头距离内容：不变）  = 8.1rem
+ * 
+ * 第4级别箭头padding-left: 8.1rem（即，第1级别内容padding-left）
+ * 第4级别内容padding-left: 1.2（向下箭头宽度：不变） + 8.1（当前级别向下箭头padding-left） + 1（向下箭头距离内容：不变）  = 10.3rem
+ *
+ * 注意：最后一级不带箭头的，要减去向下箭头的宽度。比如第三级是：8.1 - 1.2 = 6.9。
+ *
+ * 以此类推。
+ */
+
+.problem_department_type_table tbody tr .problem_department_type_level_one {
+  padding-left: 3.7rem;
+  background-size: 1.2rem auto;
+  background-repeat: no-repeat;
+  background-position: left 1.5rem center;
+  background-image: url(../../../img/select_arrow_333333.png);
+}
+
+.problem_department_type_table tbody tr .problem_department_type_level_two {
+  padding-left: 5.9rem;
+  background-size: 1.2rem auto;
+  background-repeat: no-repeat;
+  background-position: left 3.7rem center;
+  background-image: url(../../../img/select_arrow_333333.png);
+}
+
+.problem_department_type_table tbody tr .problem_department_type_level_three {
+  padding-left: 6.9rem;
+}
+
+.problem_department_type_table tbody tr .operation {
+  cursor: pointer;
+  user-select: none;
+}
+
+.problem_department_type_table tbody tr .operation span {
+  font-size: 1.4rem;
+  margin-right: 1.5rem;
+}
+
+.problem_department_type_table tbody tr .operation span:last-child {
+  margin-right: 0rem;
+}
+
+.problem_department_type_table tbody tr .operation .modify {
+  color: #5cb85c;
+}
+
+.problem_department_type_table tbody tr .operation .remove {
+  color: #d9534f;
+}
